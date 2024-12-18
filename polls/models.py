@@ -11,8 +11,9 @@ class User(AbstractUser):
     email = models.EmailField(max_length=254, verbose_name="Почта", unique=True)
     username = models.CharField(max_length=254, verbose_name="Логин", unique=True)
     password = models.CharField(max_length=254, verbose_name="Пароль")
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+    avatar = models.ImageField(upload_to='avatars/', default='avatars/default.jpg', blank=True, null=True)
     USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email', 'avatar']
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

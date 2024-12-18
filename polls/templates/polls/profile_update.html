@@ -4,9 +4,9 @@
 
 
 {% block content %}
-<form method="POST" action="{% url 'polls:profile_update' %}">
+<form method="POST" action="{% url 'polls:profile_update' %}" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Обновить</button>
+    <button type="submit" class="btn btn-primary">Обновить</button>
 </form>
 {% endblock %}

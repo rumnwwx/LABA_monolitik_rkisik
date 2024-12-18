@@ -1,27 +1,40 @@
 <!DOCTYPE html>
-<html lang="ru">
+{% load static %}
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Опросы</title>
+    <title>{% block title %}Вопросы{% endblock %}</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-<header>
-    <nav>
-        <a href="{% url 'polls:index' %}">верь в бога.ру</a>
-        <a href="{% url 'polls:index' %}">Главная</a>
-        {% if user.is_authenticated %}
-        <a href="{% url 'polls:profile' %}">Профиль</a>
-        <a href="{% url 'polls:logout' %}">Выйти</a>
-        {% else %}
-        <a href="{% url 'polls:login' %}">Войти</a>
-        <a href="{% url 'polls:register' %}">Регистрация</a>
-        {% endif %}
+<header class="bg-dark text-white py-3 mb-4">
+    <nav class="container d-flex justify-content-between align-items-center">
+        <a href="{% url 'polls:index' %}" class="navbar-brand text-white fw-bold">Верь в Бога.ру</a>
+        <div>
+            <a href="{% url 'polls:index' %}" class="text-white me-3">Главная</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'polls:profile' %}" class="text-white me-3">Профиль</a>
+                <a href="{% url 'polls:logout' %}" class="btn btn-outline-light btn-sm">Выйти</a>
+            {% else %}
+                <a href="{% url 'polls:login' %}" class="btn btn-light btn-sm me-2">Войти</a>
+                <a href="{% url 'polls:register' %}" class="btn btn-outline-light btn-sm">Регистрация</a>
+            {% endif %}
+        </div>
     </nav>
 </header>
 <main>
-    {% block content %}
-    {% endblock %}
+    <div class="container">
+        <div class="card shadow-sm p-4">
+            {% block content %}
+            <h2 class="text-center">Добро пожаловать на сайт!</h2>
+            <p class="text-center">Выберите интересующий вопрос и примите участие в голосовании.</p>
+            {% endblock %}
+        </div>
+    </div>
 </main>
 <footer>
 </footer>

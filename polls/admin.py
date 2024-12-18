@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question, Choice
+from .models import Question, Choice, User
 
 
 class ChoiceInLine(admin.TabularInline):
@@ -13,3 +13,11 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Question, QuestionAdmin)
+
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email', 'first_name', 'last_name', 'avatar' )
+    search_fields = ('username', 'email', 'first_name', 'last_name', 'avatar')
+
+
+admin.site.register(User, UserAdmin)

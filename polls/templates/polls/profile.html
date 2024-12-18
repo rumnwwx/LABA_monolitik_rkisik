@@ -6,8 +6,13 @@
 {% block content %}
 <h1>Ваш профиль</h1>
 <br>
+{% if user.avatar %}
+    <img src="{{ user.avatar.url }}" alt="Аватар пользователя" style="border-radius: 100%">
+{% else %}
+    <p>Аватар отсутствует</p>
+{% endif %}
 <p>Имя пользователя: {{ user.username }}</p>
 <p>Ваше ФИО: {{ user.last_name }} {{ user.first_name }} {{ user.patronym }}</p>
 <p>Ваш email: {{ user.email }}</p>
-<button><a href="{% url 'polls:profile_update' %}">редачить</a></button>
+<a href="{% url 'polls:profile_update' %}" class="btn btn-primary" >Редактировать профиль</a>
 {% endblock %}

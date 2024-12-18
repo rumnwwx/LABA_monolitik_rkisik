@@ -34,6 +34,10 @@ class UserCreatingForm(forms.ModelForm):
             'placeholder': 'Введите фамилию'
         })
     )
+    avatar = forms.FileField(
+        label="",
+        widget=forms.FileInput(),
+    )
     password = forms.CharField(label="",
                                widget=forms.PasswordInput(attrs={
             'placeholder': 'Введите пароль'
@@ -69,7 +73,7 @@ class UserCreatingForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("username", "first_name", "last_name", 'email')
+        fields = ("username", "first_name", "last_name", 'email', 'avatar')
 
 
 class UserLoginForm(forms.Form):
@@ -105,7 +109,11 @@ class UserUpdateForm(forms.ModelForm):
             'placeholder': 'Введите никнейм'
         })
     )
+    avatar = forms.FileField(
+        label="",
+        widget=forms.FileInput(),
+    )
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name']
+        fields = ['username', 'first_name', 'last_name', 'avatar']

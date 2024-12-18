@@ -1,21 +1,27 @@
 {% extends 'base_generic.html' %}
 {% block content %}
 
-<h1>ИЛЬЯ СУББОТА ИЛЬЯ СУББОТА, я говорю вообще то седня ж воскресенье</h1>
+<h1 class="text-center mb-4">ИЛЬЯ СУББОТА ИЛЬЯ СУББОТА, я говорю вообще-то, сегодня ж воскресенье</h1>
 
-
-{% if latest_question_list %}
-<ul>
-    {% for question in latest_question_list %}
-    <li><a href="{% url 'polls:detail' question.id %}">{{question.question_text}}</a> </li>
-    {% endfor %}
-</ul>
+<div class="container">
+    {% if latest_question_list %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for question in latest_question_list %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ question.question_text }}</h5>
+                        <p>{{ question.description }}</p>
+                        <a href="{% url 'polls:detail' question.id %}" class="btn btn-primary">Посмотреть</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     {% else %}
-     <p>
-         Нет вопросов!
-     </p>
-
-{% endif %}
+        <p class="text-center text-danger">Нет вопросов!</p>
+    {% endif %}
+</div>
 
 {% endblock %}
 
