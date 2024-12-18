@@ -1,11 +1,11 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import CustomUser
+from .models import User
 from django.contrib.auth import authenticate
 from django.utils.safestring import mark_safe
 
 
-class CustomUserCreatingForm(forms.ModelForm):
+class UserCreatingForm(forms.ModelForm):
     username = forms.CharField(
         label="",
         max_length=100,
@@ -39,16 +39,15 @@ class CustomUserCreatingForm(forms.ModelForm):
             'placeholder': 'Введите пароль'
         }))
 
-
     def clean_username(self):
         username = self.cleaned_data.get("username")
-        if CustomUser.objects.filter(username=username).exists():
+        if User.objects.filter(username=username).exists():
             raise ValidationError("Такое имя пользователя занято.")
         return username
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
-        if CustomUser.objects.filter(email=email).exists():
+        if User.objects.filter(email=email).exists():
             raise ValidationError("Такой адрес электронной почты занят.")
         return email
 
@@ -69,5 +68,16 @@ class CustomUserCreatingForm(forms.ModelForm):
         return user
 
     class Meta:
-        model = CustomUser
+        model = User
         fields = ("username", "first_name", "last_name", 'email')
+
+
+class UserLoginForm(forms.Form):
+    username = forms.CharField(
+        label="",
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Введите имя пользователя'
+        })
+    )
+    password = forms.CharField(label="", widget=forms.PasswordInput)

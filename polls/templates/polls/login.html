@@ -1,0 +1,15 @@
+{% extends 'base_generic.html' %}
+
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<h1>Вход</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Войти</button>
+</form>
+<br>
+<p>Нет аккаунта? <a href="{% url 'polls:register' %}">Зарегистрироваться</a></p>
+{% endblock %}

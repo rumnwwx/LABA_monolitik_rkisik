@@ -1,9 +1,39 @@
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic import FormView
+
+from .forms import UserCreatingForm, UserLoginForm
 from .models import Question, Choice
 from django.template import loader
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
+
+
+class Register(generic.CreateView):
+    template_name = 'polls/register.html'
+    form_class = UserCreatingForm
+    success_url = reverse_lazy('polls:login')
+
+
+class Login(FormView):
+    template_name = 'polls/login.html'
+    form_class = UserLoginForm
+    success_url = reverse_lazy('polls:index')
+
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+
+        # Аутентификация пользователя
+        user = authenticate(self.request, username=username, password=password)
+
+        if user is not None:
+            login(self.request, user)
+            return super().form_valid(form)
+        else:
+            form.add_error(None, 'Неправильное имя пользователя или пароль.')
+            return self.form_invalid(form)
 
 
 class IndexView(generic.ListView):
