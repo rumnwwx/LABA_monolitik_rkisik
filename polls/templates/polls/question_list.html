@@ -1,0 +1,18 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}Вопроси{% endblock %}
+
+
+{% block content %}
+<h1>Список вопросов для голосования</h1>
+<ul>
+    {% for question in questions %}
+        <li>
+            <a href="{% url 'vote' question.id %}">{{ question.question_text }}</a>
+        </li>
+    {% empty %}
+        <p>Нет активных вопросов.</p>
+    {% endfor %}
+</ul>
+
+{% endblock %}

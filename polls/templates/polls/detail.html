@@ -1,19 +1,28 @@
 {% extends 'base_generic.html' %}
+
 {% block content %}
+    <h1>{{ question.question_text }}</h1>
 
-<form action="{% url 'polls:vote' question.id %}" method="post">
-    {% csrf_token %}
-    <fieldset>
-        <legend>
-            <h1>{{question.question_text}}</h1>
-        </legend>
-        {% if error_message %}<p><strong> {{error_message}}</strong></p>{% endif %}
-        {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}">
-        <label for="choice{{forloop.counter}}">{{choice.choice_text}}</label><br>
-        {% endfor %}
-    </fieldset>
-<input type="submit" value="Vote">
-</form>
+    {% if question.image %}
+        <img src="{{ question.image.url }}" alt="Изображение вопроса" style="max-width: 100%; height: auto;">
+    {% endif %}
 
+    {% if question.description %}
+        <p>{{ question.description }}</p>
+    {% endif %}
+
+    <form action="{% url 'polls:vote' question.id %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Выберите вариант:</legend>
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+            {% for choice in question.choice_set.all %}
+                <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" required>
+                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+            {% endfor %}
+        </fieldset>
+
+        <input type="submit" value="Голосовать">
+    </form>
 {% endblock %}

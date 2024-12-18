@@ -1,0 +1,13 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}Профиль{% endblock %}
+
+
+{% block content %}
+<h1>Ваш профиль</h1>
+<br>
+<p>Имя пользователя: {{ user.username }}</p>
+<p>Ваше ФИО: {{ user.last_name }} {{ user.first_name }} {{ user.patronym }}</p>
+<p>Ваш email: {{ user.email }}</p>
+<button><a href="{% url 'polls:profile_update' %}">редачить</a></button>
+{% endblock %}

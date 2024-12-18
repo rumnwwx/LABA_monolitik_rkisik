@@ -1,0 +1,26 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}вапрос{% endblock %}
+
+
+{% block content %}
+<h1>{{ question.question_text }}</h1>
+
+{% if question.image %}
+    <img src="{{ question.image.url }}" alt="Изображение вопроса" style="max-width: 100%; height: auto;">
+{% endif %}
+
+{% if question.description %}
+    <p>{{ question.description }}</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {% for choice in choices %}
+        <input type="radio" id="choice{{ choice.id }}" name="choice" value="{{ choice.id }}" required>
+        <label for="choice{{ choice.id }}">{{ choice.choice_text }}</label><br>
+    {% endfor %}
+    <button type="submit">Голосовать</button>
+</form>
+
+{% endblock %}

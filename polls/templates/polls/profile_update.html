@@ -1,0 +1,12 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}Обновить профиль{% endblock %}
+
+
+{% block content %}
+<form method="POST" action="{% url 'polls:profile_update' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Обновить</button>
+</form>
+{% endblock %}
